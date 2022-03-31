@@ -1,0 +1,9 @@
+version: 1 
+eventstore1: 
+  url: http://localhost:8090/membership
+eventstore2: 
+  url: http://localhost:8090/pt-session
+events:
+  hostname: acitkafka.eastus2.cloudapp.azure.com
+  port: 9092
+  topic: gym

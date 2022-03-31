@@ -1,0 +1,11 @@
+version: 1
+datastore:
+  user: user
+  password: Password
+  hostname: acitkafka.eastus2.cloudapp.azure.com
+  port: 3306
+  db: gym
+events:
+  hostname: acitkafka.eastus2.cloudapp.azure.com
+  port: 9092
+  topic: gym

@@ -1,0 +1,205 @@
+openapi: 3.0.0
+info:
+  description: This API receives requests for gym memberships and PT sessions 
+  version: "1.0.0"
+  title: Gym API
+  contact:
+    email: jaspreetsdhunna@gmail.com
+tags:
+  - name: consumer-requests
+    description: requests by consumers posted on the app
+  - name: consumer-info
+    description: Get request made by consumers for info
+paths:
+  /membership:
+#    post:
+#      tags:
+#        - consumer-requests
+#      summary: reports a new gym membership request
+#      operationId: app.add_gym_member
+#      description: Adds a gym member to the system
+#      responses:
+#        '201':
+#          description: item created
+#        '400':
+#          description: 'invalid input, object invalid'
+#      requestBody:
+#        content:
+#          application/json:
+#            schema:
+#              $ref: '#/components/schemas/MembershipItem'
+#        description: gym membership item to add
+    get:
+      tags:
+        - consumer-requests
+      summary: gets new membership requests
+      operationId: app.get_gym_member 
+      description: Gets membership requests added after a timestamp 
+      parameters: 
+        - name: timestamp 
+          in: query 
+          description: Limits the number of items on a page 
+          schema: 
+            type: string 
+            format: date-time 
+            example: 2016-08-29T09:12:33.001Z 
+      responses: 
+        '200': 
+          description: Successfully returned a list of membership events 
+          content: 
+            application/json: 
+              schema: 
+                type: array 
+                items: 
+                  $ref: '#/components/schemas/MembershipItem' 
+        '400': 
+          description: Invalid request 
+          content: 
+            application/json: 
+              schema: 
+                type: object 
+                properties: 
+                  message: 
+                    type: string
+    
+  /pt-session:
+#    post:
+#      tags:
+#        - consumer-requests
+#      summary: reports a new personal training session request
+#      operationId: app.book_pt_session
+#      description: Adds a new personal training session request
+#      responses:
+#        '201':
+#          description: item created
+#        '400':
+#          description: 'invalid input, object invalid'
+#      requestBody:
+#        content:
+#          application/json:
+#            schema:
+#              $ref: '#/components/schemas/PtItem'
+#        description: personal training session request item to add
+    get:
+      tags:
+        - consumer-requests
+      summary: gets new pt-session requests
+      operationId: app.get_pt_session 
+      description: Gets pt-session requests added after a timestamp 
+      parameters: 
+        - name: timestamp 
+          in: query 
+          description: Limits the number of items on a page 
+          schema: 
+            type: string 
+            format: date-time 
+            example: 2016-08-29T09:12:33.001Z 
+      responses: 
+        '200': 
+          description: Successfully returned a list of pt-session events 
+          content: 
+            application/json: 
+              schema: 
+                type: array 
+                items: 
+                  $ref: '#/components/schemas/PtItem' 
+        '400': 
+          description: Invalid request 
+          content: 
+            application/json: 
+              schema: 
+                type: object 
+                properties: 
+                  message: 
+                    type: string
+
+components:
+  schemas:
+    MembershipItem:
+      type: object
+      required:
+        - user_info
+        - membership_months
+        - start_date
+        - gym_address
+        - timestamp
+        - trace_id
+      properties:
+        user_info:
+          $ref: '#/components/schemas/User'
+        membership_months:
+          type: integer
+          format: int32
+          example: 12
+        start_date:
+          type: string
+          format: date
+          example: '2017-07-21'
+        gym_address: 
+          type: string
+          example: '13999 88 ave, Burnaby'
+        timestamp:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
+        trace_id:
+          type: string          
+        
+    PtItem:
+      type: object
+      required:
+        - user_info
+        - trainer_id
+        - start_time
+        - duration_hours
+        - timestamp
+        - trace_id
+      properties:
+        user_info:
+          $ref: '#/components/schemas/User'
+        trainer_id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        start_time:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
+        duration_hours:
+          type: number
+          format: float
+          example: 1.5
+        timestamp:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
+        trace_id:
+          type: string
+          
+    User:
+      required:
+        - user_id
+        - user_name
+        - user_height
+        - user_weight
+        - user_address
+      properties:
+        user_id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        user_name:
+          type: string
+          example: 'Jack'
+        user_height:
+          type: number
+          format: float
+          example: 180.5
+        user_weight:
+          type: number
+          format: float
+          example: 200.8
+        user_address:
+          type: string
+          example: '13999 88 ave, Burnaby'
+      type: object

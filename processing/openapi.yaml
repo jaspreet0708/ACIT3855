@@ -1,0 +1,58 @@
+openapi: 3.0.0
+info:
+  description: This API receives requests for gym memberships and PT sessions 
+  version: "1.0.0"
+  title: Gym API
+  contact:
+    email: jaspreetsdhunna@gmail.com
+tags:
+  - name: consumer-requests
+    description: requests by consumers posted on the app
+  - name: consumer-info
+    description: Get request made by consumers for info
+paths:
+  /stats:
+    get: 
+      summary: Gets the event stats 
+      operationId: app.get_stats 
+      description: Gets Gym membership and pt-session processsed statistics 
+      responses: 
+        '200': 
+          description: Successfully returned a list of gym events 
+          content: 
+            application/json: 
+              schema: 
+                type: object 
+                items: 
+                  $ref: '#/components/schemas/GymStats' 
+        '400': 
+          description: Invalid request 
+          content: 
+            application/json: 
+              schema: 
+                type: object 
+                properties: 
+                  message: 
+                    type: string
+components:
+  schemas: 
+    GymStats: 
+      required: 
+      - num_membership 
+      - max_weight 
+      - max_height 
+      - num_pt_session 
+      properties: 
+        num_memberships: 
+          type: integer 
+          example: 500000 
+        max_weight: 
+          type: number 
+          example: 190.8 
+        max_height: 
+          type: number 
+          example: 180.7 
+        num_pt_session: 
+          type: integer 
+          example: 500000 
+      type: object
