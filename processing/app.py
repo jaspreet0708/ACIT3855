@@ -1,7 +1,6 @@
 
 from inspect import trace
 # from xxlimited import new
-from pykafka import KafkaClient
 import requests
 from apscheduler.schedulers.background import BackgroundScheduler
 import connexion, yaml, logging, logging.config, uuid
