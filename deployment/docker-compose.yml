@@ -44,27 +44,27 @@ services:
   receiver:
     image: receiver:latest
     ports:
-    - “8080:8080”
+    - '8080:8080'
     depends_on:
-    - “kafka”
+    - 'kafka'
   storage:
     image: storage:latest
     ports:
-    - “8090:8090”
+    - '8090:8090'
     depends_on:
-    - “kafka”
+    - 'kafka'
   audit_log:
     image: audit_log:latest
     ports:
-    - “8110:8110”
+    - '8110:8110'
     depends_on:
-    - “kafka”
+    - 'kafka'
   processing:
     image: processing:latest
     ports:
-    - “8100:8100”
+    - '8100:8100'
     depends_on:
-    - “kafka”
+    - 'kafka'
   
 volumes:
   my-db1:
