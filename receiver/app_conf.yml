@@ -4,6 +4,6 @@ eventstore1:
 eventstore2: 
   url: http://localhost:8090/pt-session
 events:
-  hostname: localost
+  hostname: kafka
   port: 9092
   topic: events

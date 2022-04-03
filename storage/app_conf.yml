@@ -6,6 +6,6 @@ datastore:
   port: 3306
   db: gym
 events:
-  hostname: localhost
+  hostname: kafka
   port: 9092
   topic: events
