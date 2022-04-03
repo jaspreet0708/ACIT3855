@@ -8,4 +8,4 @@ datastore:
 events:
   hostname: localhost
   port: 9092
-  topic: gym
+  topic: events

@@ -6,4 +6,4 @@ eventstore2:
 events:
   hostname: localost
   port: 9092
-  topic: gym
+  topic: events
