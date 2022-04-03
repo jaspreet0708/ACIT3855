@@ -1,9 +1,5 @@
 version: 1 
-eventstore1: 
-  url: http://storage:8090/membership
-eventstore2: 
-  url: http://storage:8090/pt-session
 events:
   hostname: kafka
   port: 9092
-  topic: events
+  topic: gym

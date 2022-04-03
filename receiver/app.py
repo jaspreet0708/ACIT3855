@@ -1,6 +1,5 @@
 
 from inspect import trace
-import requests
 from pykafka import KafkaClient
 import datetime, json
 import connexion, yaml, logging, logging.config, uuid
@@ -12,8 +11,8 @@ def generate_trace_id():
 
 with open('app_conf.yml', 'r') as f: 
     app_config = yaml.safe_load(f.read())
-    membership_event = app_config['eventstore1']['url']
-    pt_event = app_config['eventstore2']['url']
+    # membership_event = app_config['eventstore1']['url']
+    # pt_event = app_config['eventstore2']['url']
     hostname = app_config['events']['hostname']
     port = app_config['events']['port']
     t = app_config['events']['topic']
