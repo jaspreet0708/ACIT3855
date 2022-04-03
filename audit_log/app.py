@@ -51,6 +51,7 @@ def get_pt_session(index):
 
     consumer = topic.get_simple_consumer(reset_offset_on_start=True, consumer_timeout_ms=1000)
     logger.info("Retrieving pt session at index %d" % index)
+    i = 0
     try:
         for msg in consumer:
             msg_str = msg.value.decode('utf-8')
