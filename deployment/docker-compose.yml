@@ -61,6 +61,8 @@ services:
     - 'kafka'
   processing:
     build: ../processing
+    networks:
+      - host
     ports:
     - '8100:8100'
     depends_on:
