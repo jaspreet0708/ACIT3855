@@ -42,29 +42,29 @@ services:
     volumes:
       - my-db1:/var/lib/mysql
   receiver:
-    image: receiver:latest
+    build: receiver
     ports:
     - '8080:8080'
     depends_on:
     - 'kafka'
   storage:
-    image: storage:latest
+    build: storage
     ports:
     - '8090:8090'
     depends_on:
     - 'kafka'
-  # audit_log:
-  #   image: audit_log:latest
-  #   ports:
-  #   - '8110:8110'
-  #   depends_on:
-  #   - 'kafka'
-  # processing:
-  #   image: processing:latest
-  #   ports:
-  #   - '8100:8100'
-  #   depends_on:
-  #   - 'db'
+  audit_log:
+    build: audit_log
+    ports:
+    - '8110:8110'
+    depends_on:
+    - 'kafka'
+  processing:
+    build: processing
+    ports:
+    - '8100:8100'
+    depends_on:
+    - 'db'
   
 volumes:
   my-db1:
