@@ -15,7 +15,7 @@ import datetime
 with open('app_conf.yml', 'r') as f: 
     app_config = yaml.safe_load(f.read())
     pull = app_config["datastore"]["filename"]
-
+    tii= app_config['scheduler']['period_sec']
 
 with open('log_conf.yml', 'r') as f: 
     log_config = yaml.safe_load(f.read()) 
@@ -99,7 +99,7 @@ def populate_stats():
 
 def init_scheduler(): 
     sched = BackgroundScheduler(daemon=True) 
-    sched.add_job(populate_stats, 'interval', seconds=app_config['scheduler']['period_sec']) 
+    sched.add_job(populate_stats, 'interval', seconds=tii) 
     sched.start()
 
 def get_stats(): 
