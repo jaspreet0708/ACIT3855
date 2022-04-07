@@ -30,7 +30,7 @@ DB_SESSION = sessionmaker(bind=DB_ENGINE)
 def populate_stats(): 
     """ Periodically update stats """ 
     logger.info('Start Periodic Processing')
-    result = {'num_membership': 1, 'num_pt_session': 1, 'max_height': 1, 'max_weight': 1, 'last_updated': '1'} # default stats
+    # result = {'num_membership': 1, 'num_pt_session': 1, 'max_height': 1, 'max_weight': 1, 'last_updated': '1'} # default stats
     session = DB_SESSION() 
     results = session.query(Stats).order_by(Stats.last_updated.desc())
     result = results[0]
