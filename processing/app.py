@@ -30,7 +30,7 @@ DB_SESSION = sessionmaker(bind=DB_ENGINE)
 def populate_stats(): 
     """ Periodically update stats """ 
     logger.info('Start Periodic Processing')
-    # result = {'num_membership': 1, 'num_pt_session': 1, 'max_height': 1, 'max_weight': 1, 'last_updated': '1'} # default stats
+    result = {'num_membership': 1, 'num_pt_session': 1, 'max_height': 1, 'max_weight': 1, 'last_updated': '1'} # default stats
     session = DB_SESSION() 
     results = session.query(Stats).order_by(Stats.last_updated.desc())
     result = results[0]
@@ -41,8 +41,6 @@ def populate_stats():
 
     response1 = requests.get(f"{app_config['eventstore']['url']}/membership", params= {'timestamp': last_update_timestamp})
     response2 = requests.get(f"{app_config['eventstore']['url']}/pt-session", params= {'timestamp': last_update_timestamp})
-    logger.info(f"response1 is {response1}")
-    logger.info(f"response2 is {response2}")
     if(response1.status_code !=200):
         logger.error('membership get event did not return 200 code')
     if(response2.status_code != 200):
@@ -120,10 +118,9 @@ def get_stats():
     return stats, 200
 
 app = connexion.FlaskApp(__name__, specification_dir='')
-app.add_api("openapi.yaml")
-# , strict_validation=True, validate_responses=True
+app.add_api("openapi.yaml", strict_validation=True, validate_responses=True)
 
 if __name__ == "__main__": 
     # run our standalone gevent server 
     init_scheduler() 
-    app.run(host='0.0.0.0',port=8100, use_reloader=False)
+    app.run(port=8100, use_reloader=False)
