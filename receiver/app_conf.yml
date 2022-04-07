@@ -2,4 +2,4 @@ version: 1
 events:
   hostname: kafka
   port: 9092
-  topic: gym
+  topic: project

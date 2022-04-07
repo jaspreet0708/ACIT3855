@@ -134,7 +134,7 @@ def process_messages():
     client = KafkaClient(hosts=hostname)
     topic = client.topics[str.encode(app_config["events"]["topic"])]
 
-    consumer = topic.get_simple_consumer(consumer_group=b'event_group', reset_offset_on_start=False, auto_offset_reset=OffsetType.LATEST)
+    consumer = topic.get_simple_consumer(consumer_group=b'events_group', reset_offset_on_start=False, auto_offset_reset=OffsetType.LATEST)
 
     for msg in consumer:
         msg_str = msg.value.decode('utf-8')
@@ -192,5 +192,5 @@ if __name__ == "__main__":
     t1 = Thread(target=process_messages)
     t1.setDaemon(True)
     t1.start()
-    app.run(host='0.0.0.0',port=8090)
+    app.run(host='0.0.0.0' ,port=8090)
 
