@@ -37,11 +37,6 @@ paths:
 components:
   schemas: 
     GymStats: 
-      required: 
-      - num_membership 
-      - max_weight 
-      - max_height 
-      - num_pt_session 
       properties: 
         num_memberships: 
           type: integer 
