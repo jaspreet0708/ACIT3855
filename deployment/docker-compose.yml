@@ -59,12 +59,12 @@ services:
     - '8110:8110'
     depends_on:
     - 'kafka'
-  # processing:
-  #   build: ../processing
-  #   ports:
-  #   - '8100:8100'
-  #   depends_on:
-  #   - 'storage'
+  processing:
+    build: ../processing
+    ports:
+    - '8100:8100'
+    depends_on:
+    - 'storage'
   
 volumes:
   my-db1:
