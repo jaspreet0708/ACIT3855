@@ -27,7 +27,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /home/azureuser/kafka:/kafka/kafka-logs
     depends_on:
-      - "zookeeper"
+      - 'zookeeper'
   db:
     image: mysql:5.7
     restart: always
@@ -82,3 +82,4 @@ services:
   
 volumes:
   my-db1:
+

@@ -22,7 +22,7 @@ class GymMember(Base):
     trace_id = Column(String(250), nullable=False)
 
     def __init__(self, user_id, user_name, user_height, user_weight, user_address, gym_address,membership_months,start_date,timestamp, trace_id):
-        """ Initializes a gym membership request """
+        """ Initializes a gym membership request t """
         self.user_id = user_id
         self.timestamp = timestamp
         self.date_created = datetime.datetime.now()  # Sets the date/time record is created
