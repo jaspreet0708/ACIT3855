@@ -66,6 +66,13 @@ services:
     - '8100:8100'
     depends_on:
     - 'storage'
+  dashboard:
+    build: ../dashboard
+    ports:
+    - '3000:3000'
+    depends_on:
+    - 'processing'
+    - 'audit_log'
   
 volumes:
   my-db1:
