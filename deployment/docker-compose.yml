@@ -62,8 +62,8 @@ services:
   processing:
     build: ../processing
     network_mode: host
-    ports:
-    - '8100:8100'
+    # ports:
+    # - '8100:8100'
     depends_on:
     - 'storage'
   
