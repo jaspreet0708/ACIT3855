@@ -12,9 +12,9 @@ export default function EndpointAudit(props) {
     const getAudit = () => {
         fetch(`http://acitkafka.eastus2.cloudapp.azure.com:8110/${props.endpoint}?index=${rand_val}`)
             .then(res => {
-                res.json();
             if (res.status == 200){
                 setIndex(rand_val);//setting index
+                return res.json();
             }})
             .then((result)=>{
 				console.log("Received Audit Results for " + props.endpoint)
