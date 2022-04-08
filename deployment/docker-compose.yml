@@ -61,9 +61,9 @@ services:
     - 'kafka'
   processing:
     build: ../processing
-    network_mode: host
-    # ports:
-    # - '8100:8100'
+    # network_mode: host
+    ports:
+    - '8100:8100'
     depends_on:
     - 'storage'
   
