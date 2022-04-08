@@ -8,7 +8,6 @@ export default function EndpointAudit(props) {
 	const rand_val = Math.floor(Math.random() * 100); // Get a random event from the event store
     const [index, setIndex] = useState(null); //adding a state for the index
 
-    setIndex(rand_val);
 
     const getAudit = () => {
         fetch(`http://acitkafka.eastus2.cloudapp.azure.com:8110/${props.endpoint}?index=${rand_val}`)
@@ -32,10 +31,10 @@ export default function EndpointAudit(props) {
     } else if (isLoaded === false){
         return(<div>Loading...</div>)
     } else if (isLoaded === true){
-        
+        setIndex(rand_val);//setting index
         return (
             <div>
-                <h3>{props.endpoint}-{rand_val}</h3>
+                <h3>{props.endpoint}-{index}</h3>
                 {JSON.stringify(log)}
             </div>
         )
