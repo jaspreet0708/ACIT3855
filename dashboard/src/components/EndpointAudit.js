@@ -13,6 +13,7 @@ export default function EndpointAudit(props) {
         fetch(`http://acitkafka.eastus2.cloudapp.azure.com:8110/${props.endpoint}?index=${rand_val}`)
             .then(res => res.json())
             .then((result)=>{
+                setIndex(rand_val);//setting index
 				console.log("Received Audit Results for " + props.endpoint)
                 setLog(result);
                 setIsLoaded(true);
@@ -31,10 +32,10 @@ export default function EndpointAudit(props) {
     } else if (isLoaded === false){
         return(<div>Loading...</div>)
     } else if (isLoaded === true){
-        setIndex(rand_val);//setting index
+        
         return (
             <div>
-                <h3>{props.endpoint}-{index}</h3>
+                <h3>{props.endpoint}-{rand_val}</h3>
                 {JSON.stringify(log)}
             </div>
         )
