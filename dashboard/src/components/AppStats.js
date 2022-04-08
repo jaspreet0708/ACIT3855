@@ -39,7 +39,7 @@ export default function AppStats() {
 							<th>Pt Sessions</th>
 						</tr>
 						<tr>
-							<td># Memberships: {stats['num_memberships']}</td>
+							<td># Memberships: {stats['num_membership']}</td>
 							<td># Pt Sessions: {stats['num_pt_session']}</td>
 						</tr>
 						<tr>
