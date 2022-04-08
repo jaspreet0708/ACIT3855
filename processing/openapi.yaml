@@ -50,4 +50,7 @@ components:
         num_pt_session: 
           type: integer 
           example: 500000 
+        last_updated:
+          type: string
+          example: time
       type: object
