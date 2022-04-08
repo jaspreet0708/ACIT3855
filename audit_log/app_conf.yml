@@ -6,4 +6,4 @@ eventstore2:
 events:
   hostname: kafka
   port: 9092
-  topic: events
+  topic: bruh
