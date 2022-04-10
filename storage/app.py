@@ -83,7 +83,7 @@ def process_messages():
     """ Process event messages """
     hostname = "%s:%d" % (app_config["events"]["hostname"], app_config["events"]["port"])
     retry = 0
-    while(retry>retries):
+    while(retry<=retries):
         logger.info(f'Trying to connect to kafka producer, retrying kafak consumer....TRY {retry}')
         client = KafkaClient(hosts=hostname)
         logger.info(f'MAybe error connecting to kafka {client}')
