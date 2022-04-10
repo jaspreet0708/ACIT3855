@@ -33,7 +33,7 @@ while(retry<=retries):
         client = KafkaClient(hosts=f'{hostname}:{port}')
         topic = client.topics[str.encode(t)]
     except:
-        print(f'MAybe error connecting to kafka {client}')
+        print(f'THERE IS error connecting to kafka')
         pass
     time.sleep(go_sleepy)
     retry = retry + 1

@@ -89,7 +89,7 @@ def process_messages():
             client = KafkaClient(hosts=hostname)
             topic = client.topics[str.encode(app_config["events"]["topic"])]
         except:
-            print(f'MAybe error connecting to kafka {client}')
+            print(f'THERE IS error connecting to kafka')
             pass
         time.sleep(go_sleepy)
         retry = retry + 1
