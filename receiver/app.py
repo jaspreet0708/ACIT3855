@@ -34,6 +34,7 @@ while(retry<=retries):
         topic = client.topics[str.encode(t)]
     except:
         print(f'MAybe error connecting to kafka {client}')
+        pass
     time.sleep(go_sleepy)
     retry = retry + 1
 
