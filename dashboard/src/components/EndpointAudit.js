@@ -5,7 +5,8 @@ export default function EndpointAudit(props) {
     const [isLoaded, setIsLoaded] = useState(false);
     const [log, setLog] = useState(null);
     const [error, setError] = useState(null)
-	const rand_val = Math.floor(Math.random() * 10); // Get a random event from the event store
+	// const rand_val = Math.floor(Math.random() * 10); // Get a random event from the event store
+    const rand_val = 1
     const [index, setIndex] = useState(null); //adding a state for the index
 
 

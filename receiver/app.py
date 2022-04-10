@@ -1,9 +1,10 @@
 
 from inspect import trace
 from pykafka import KafkaClient
-import datetime, json
+import datetime, json, time
 import connexion, yaml, logging, logging.config, uuid
 from connexion import NoContent
+
 
 
 def generate_trace_id():
@@ -16,6 +17,8 @@ with open('app_conf.yml', 'r') as f:
     hostname = app_config['events']['hostname']
     port = app_config['events']['port']
     t = app_config['events']['topic']
+    retries = app_config['events']['retry']
+    go_sleepy = app_config['events']['sleep']
 
 
 with open('log_conf.yml', 'r') as f: 
@@ -23,15 +26,23 @@ with open('log_conf.yml', 'r') as f:
     logging.config.dictConfig(log_config) 
     logger = logging.getLogger('basicLogger')
 
+retry = 0
+while(retry<=retries):
+    logger.info(f'Trying to connect to kafka, retrying kafak producer....TRY {retry}')
+    try:
+        client = KafkaClient(hosts=f'{hostname}:{port}')
+        topic = client.topics[str.encode(t)]
+    except:
+        print(f'MAybe error connecting to kafka {client}')
+    time.sleep(go_sleepy)
+    retry = retry + 1
+
+
 def add_gym_member(body):
     """ Receives a membership event"""
 
     trace_id = f'{generate_trace_id()}'
     body['trace_id'] = trace_id
-    # response = requests.post(membership_event, json=body, headers={"content-type": "application/json"})
-    # status_code = response.status_code
-    client = KafkaClient(hosts=f'{hostname}:{port}')
-    topic = client.topics[str.encode(t)]
     producer = topic.get_sync_producer()
     msg = {"type": "membership",
            "datetime": datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
@@ -49,10 +60,8 @@ def book_pt_session(body):
 
     trace_id = f'{generate_trace_id()}'
     body['trace_id'] = trace_id
-    # response = requests.post(pt_event, json=body, headers={"content-type": "application/json"})
-    # status_code = response.status_code
-    client = KafkaClient(hosts=f'{hostname}:{port}')
-    topic = client.topics[str.encode(t)]
+    # client = KafkaClient(hosts=f'{hostname}:{port}')
+    # topic = client.topics[str.encode(t)]
     producer = topic.get_sync_producer()
     msg = {"type": "pt",
            "datetime": datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
