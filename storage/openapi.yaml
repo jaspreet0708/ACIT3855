@@ -36,7 +36,14 @@ paths:
       operationId: app.get_gym_member 
       description: Gets membership requests added after a timestamp 
       parameters: 
-        - name: timestamp 
+        - name: start_timestamp 
+          in: query 
+          description: Limits the number of items on a page 
+          schema: 
+            type: string 
+            format: date-time 
+            example: 2016-08-29T09:12:33.001Z 
+        - name: end_timestamp 
           in: query 
           description: Limits the number of items on a page 
           schema: 
@@ -87,7 +94,14 @@ paths:
       operationId: app.get_pt_session 
       description: Gets pt-session requests added after a timestamp 
       parameters: 
-        - name: timestamp 
+        - name: start_timestamp 
+          in: query 
+          description: Limits the number of items on a page 
+          schema: 
+            type: string 
+            format: date-time 
+            example: 2016-08-29T09:12:33.001Z 
+        - name: end_timestamp 
           in: query 
           description: Limits the number of items on a page 
           schema: 

@@ -5,6 +5,7 @@ from pykafka.common import OffsetType
 from threading import Thread
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy import and_
 from base import Base
 from add_gym_member import GymMember
 from book_pt_session import PTSession
@@ -84,15 +85,16 @@ logger.info(f"Connecting to DB Hostname: {host}, Port: {port}")
 #     return NoContent, 201
 
 
-def get_gym_member(timestamp): 
+def get_gym_member(start_timestamp, end_timestamp): 
     """ Gets new blood pressure readings after the timestamp """ 
  
     session = DB_SESSION() 
  
-    timestamp_datetime = datetime.datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%SZ") 
-    print(timestamp)
+    start_timestamp_datetime = datetime.datetime.strptime(start_timestamp, "%Y-%m-%dT%H:%M:%SZ")
+    end_timestamp_datetime = datetime.datetime.strptime(end_timestamp, "%Y-%m-%dT%H:%M:%SZ") 
+    print(f"loading entires from {start_timestamp_datetime} to {end_timestamp_datetime}")
  
-    readings = session.query(GymMember).filter(GymMember.date_created >= timestamp_datetime) 
+    readings = session.query(GymMember).filter(and_(GymMember.date_created >= start_timestamp_datetime, GymMember.date_created < end_timestamp_datetime)) 
  
     results_list = [] 
  
@@ -101,20 +103,21 @@ def get_gym_member(timestamp):
  
     session.close() 
      
-    logger.info("Query for membership requests after %s returns %d results" %  
-                (timestamp, len(results_list))) 
+    logger.info(f"Query for membership requests for {start_timestamp_datetime} to {end_timestamp_datetime} returns {len(results_list)} results") 
  
     return results_list, 200
 
 
-def get_pt_session(timestamp): 
+def get_pt_session(start_timestamp, end_timestamp): 
     """ Gets new blood pressure readings after the timestamp """ 
  
     session = DB_SESSION() 
  
-    timestamp_datetime = datetime.datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%SZ") 
+    start_timestamp_datetime = datetime.datetime.strptime(start_timestamp, "%Y-%m-%dT%H:%M:%SZ")
+    end_timestamp_datetime = datetime.datetime.strptime(end_timestamp, "%Y-%m-%dT%H:%M:%SZ") 
+    print(f"loading entires from {start_timestamp_datetime} to {end_timestamp_datetime}")
 
-    readings = session.query(PTSession).filter(PTSession.date_created >= timestamp_datetime) 
+    readings = session.query(PTSession).filter(and_(PTSession.date_created >= start_timestamp_datetime, PTSession.date_created < end_timestamp_datetime)) 
  
     results_list = [] 
  
@@ -123,7 +126,7 @@ def get_pt_session(timestamp):
  
     session.close() 
      
-    logger.info("Query for pt-session requests after %s returns %d results" % (timestamp, len(results_list)))
+    logger.info(f"Query for pt-session requests for {start_timestamp_datetime} to {end_timestamp_datetime} returns {len(results_list)} results") 
  
     return results_list, 200
 

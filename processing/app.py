@@ -40,8 +40,8 @@ def populate_stats():
     
     current = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
 
-    response1 = requests.get(f"{app_config['eventstore']['url']}/membership", params= {'timestamp': last_update_timestamp})
-    response2 = requests.get(f"{app_config['eventstore']['url']}/pt-session", params= {'timestamp': last_update_timestamp})
+    response1 = requests.get(f"{app_config['eventstore']['url']}/membership", params= {'start_timestamp': last_update_timestamp, 'end_timestamp': current})
+    response2 = requests.get(f"{app_config['eventstore']['url']}/pt-session", params= {'start_timestamp': last_update_timestamp, 'end_timestamp': current})
     logger.info(f"response1 is {response1}")
     logger.info(f"response2 is {response2}")
     if(response1.status_code !=200):
