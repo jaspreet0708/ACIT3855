@@ -83,15 +83,16 @@ def process_messages():
     """ Process event messages """
     hostname = "%s:%d" % (app_config["events"]["hostname"], app_config["events"]["port"])
     retry = 0
-    while(retry<=retries):
+    while(retry>retries):
         logger.info(f'Trying to connect to kafka producer, retrying kafak consumer....TRY {retry}')
         client = KafkaClient(hosts=hostname)
         logger.info(f'MAybe error connecting to kafka {client}')
         time.sleep(go_sleepy)
         retry = retry + 1
-    topic = client.topics[str.encode(app_config["events"]["topic"])]
 
-    consumer = topic.get_simple_consumer(consumer_group=b'bruh_group', reset_offset_on_start=False, auto_offset_reset=OffsetType.LATEST)
+        topic = client.topics[str.encode(app_config["events"]["topic"])]
+
+        consumer = topic.get_simple_consumer(consumer_group=b'bruh_group', reset_offset_on_start=False, auto_offset_reset=OffsetType.LATEST)
 
     for msg in consumer:
         msg_str = msg.value.decode('utf-8')
