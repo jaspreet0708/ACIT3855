@@ -5,18 +5,17 @@ export default function EndpointAudit(props) {
     const [isLoaded, setIsLoaded] = useState(false);
     const [log, setLog] = useState(null);
     const [error, setError] = useState(null)
-	const rand_val = Math.floor(Math.random() * 100); // Get a random event from the event store
+	const rand_val = Math.floor(Math.random() * 10); // Get a random event from the event store
     // const rand_val = 1
     const [index, setIndex] = useState(null); //adding a state for the index
 
 
     const getAudit = () => {
         fetch(`http://acitkafka.eastus2.cloudapp.azure.com:8110/${props.endpoint}?index=${rand_val}`)
-            .then((res) => {
-                res.json();
-                if (res.status == 200){
-                setIndex(rand_val);//setting index
-            }})         
+            .then(res => res.json())   
+            // if (res.status == 200){
+            //     setIndex(rand_val);//setting index
+            // }      
             .then((result)=>{
 				console.log("Received Audit Results for " + props.endpoint)
                 setLog(result);
@@ -39,7 +38,7 @@ export default function EndpointAudit(props) {
         
         return (
             <div>
-                <h3>{props.endpoint}-{index}</h3>
+                <h3>{props.endpoint}-{rand_val}</h3>
                 {JSON.stringify(log)}
             </div>
         )
