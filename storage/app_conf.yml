@@ -5,7 +5,10 @@ datastore:
   hostname: db
   port: 3306
   db: gym
+
 events:
   hostname: kafka
   port: 9092
   topic: bruh
+  retry: 2
+  sleep: 3

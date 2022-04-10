@@ -9,7 +9,7 @@ from sqlalchemy import and_
 from base import Base
 from add_gym_member import GymMember
 from book_pt_session import PTSession
-import datetime, json
+import datetime, json, time
 
 with open('app_conf.yml', 'r') as f:
     app_config = yaml.safe_load(f.read())
@@ -18,6 +18,8 @@ with open('app_conf.yml', 'r') as f:
     host = app_config['datastore']['hostname']
     port = app_config['datastore']['port']
     db = app_config['datastore']['db']
+    retries = app_config['events']['retry']
+    go_sleepy = app_config['events']['sleep']
 
 with open('log_conf.yml', 'r') as f:
     log_config = yaml.safe_load(f.read())
@@ -29,60 +31,6 @@ Base.metadata.bind = DB_ENGINE
 DB_SESSION = sessionmaker(bind=DB_ENGINE)
 
 logger.info(f"Connecting to DB Hostname: {host}, Port: {port}")
-
-# def add_gym_member(body):
-#     """ Receives a gym membership entry """
-#
-#     session = DB_SESSION()
-#
-#     gm = GymMember(
-#         body['user_info']['user_id'],
-#         body['user_info']['user_name'],
-#         body['user_info']['user_weight'],
-#         body['user_info']['user_height'],
-#         body['user_info']['user_address'],
-#         body['gym_address'],
-#         body['membership_months'],
-#         body['start_date'],
-#         body['timestamp'],
-#         body['trace_id']
-#     )
-#
-#     session.add(gm)
-#
-#     session.commit()
-#     session.close()
-#
-#     logger.debug(f"Stored event membership request with a trace id of {body.trace_id}")
-#
-#     return NoContent, 201
-
-
-# def book_pt_session(body):
-#     """ Receives a pt session booking entry """
-#
-#     session = DB_SESSION()
-#
-#     pt = PTSession(
-#         body['user_info']['user_id'],
-#         body['user_info']['user_name'],
-#         body['user_info']['user_weight'],
-#         body['user_info']['user_height'],
-#         body['user_info']['user_address'],
-#         body['trainer_id'],
-#         body['duration_hours'],
-#         body['start_time'],
-#         body['timestamp'],
-#         body['trace_id']
-#     )
-#     session.add(pt)
-#
-#     session.commit()
-#     session.close()
-#
-#     logger.debug(f"Stored event pt-session request with a trace id of {body['trace_id']}")
-#
-#     return NoContent, 201
 
 
 def get_gym_member(start_timestamp, end_timestamp): 
@@ -134,7 +82,13 @@ def get_pt_session(start_timestamp, end_timestamp):
 def process_messages():
     """ Process event messages """
     hostname = "%s:%d" % (app_config["events"]["hostname"], app_config["events"]["port"])
-    client = KafkaClient(hosts=hostname)
+    retry = 0
+    while(retry<=retries):
+        logger.info(f'Trying to connect to kafka producer, retrying kafak consumer....TRY {retry}')
+        client = KafkaClient(hosts=hostname)
+        logger.info(f'MAybe error connecting to kafka {client}')
+        time.sleep(go_sleepy)
+        retry = retry + 1
     topic = client.topics[str.encode(app_config["events"]["topic"])]
 
     consumer = topic.get_simple_consumer(consumer_group=b'bruh_group', reset_offset_on_start=False, auto_offset_reset=OffsetType.LATEST)
