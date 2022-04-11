@@ -88,11 +88,11 @@ def process_messages():
         try:
             client = KafkaClient(hosts=hostname)
             topic = client.topics[str.encode(app_config["events"]["topic"])]
+            break
         except:
             print(f'THERE IS error connecting to kafka')
-            pass
-        time.sleep(go_sleepy)
-        retry = retry + 1
+            time.sleep(go_sleepy)
+            retry = retry + 1
 
         
     consumer = topic.get_simple_consumer(consumer_group=b'bruh_group', reset_offset_on_start=False, auto_offset_reset=OffsetType.LATEST)

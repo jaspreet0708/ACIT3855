@@ -32,11 +32,11 @@ while(retry<=retries):
     try:
         client = KafkaClient(hosts=f'{hostname}:{port}')
         topic = client.topics[str.encode(t)]
+        break
     except:
-        print(f'THERE IS error connecting to kafka')
-        pass
-    time.sleep(go_sleepy)
-    retry = retry + 1
+        print(f'THERE IS error connecting to kafka') 
+        time.sleep(go_sleepy)
+        retry = retry + 1
 
 
 def add_gym_member(body):
